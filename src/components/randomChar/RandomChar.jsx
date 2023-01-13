@@ -43,6 +43,7 @@ class RandomChar extends Component {
     }
 
     onClickRandomCharacter = () => {
+        this.setState({loading: true});
         this.updateChar();
     }
     
