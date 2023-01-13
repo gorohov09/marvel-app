@@ -36,6 +36,7 @@ class CharList extends Component {
                 <CharListItem 
                 key={id}
                 {...charProps}
+                onCharSelected={() => this.props.onCharSelected(id)}
                 />
             );
         });
@@ -69,11 +70,13 @@ class CharList extends Component {
 }
 
 const CharListItem = (props) => {
-    const {name, thumbnail} = props;
+    const {name, thumbnail, onCharSelected} = props;
     const isImageNotAvailable = thumbnail.includes('image_not_available.jpg');
     return (
         <>
-            <li className="char__item">
+            <li className="char__item"
+                onClick={onCharSelected}
+                >
                 <img src={thumbnail} 
                     alt="abyss" 
                     style={isImageNotAvailable ? {objectFit: 'fill'} : {}}
