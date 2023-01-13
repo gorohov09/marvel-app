@@ -9,11 +9,6 @@ import mjolnir from '../../resources/img/mjolnir.png';
 
 class RandomChar extends Component {
 
-    constructor(props) {
-        super(props);
-        this.updateChar();
-    }
-
     //Свойство
     state = {
         char: {},
@@ -23,6 +18,10 @@ class RandomChar extends Component {
 
     //Свойство
     marvelService = new MarvelService();
+
+    componentDidMount() {
+        this.updateChar();
+    }
 
     onCharLoaded = (char) => {
         this.setState({char: char, loading: false});
