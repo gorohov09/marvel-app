@@ -10,16 +10,30 @@ class CharList extends Component {
     state = {
         characters: [],
         loading: true,
-        error: false
+        error: false,
+        newItemsLoading: false,
+        offset: 1550,
+        charEnded: false
     }
 
     marvelService = new MarvelService();
 
     componentDidMount() {
+        this.onRequest();
+    }
+
+    onRequest = (offset) => {
+        this.onCharListLoading();
         this.marvelService
-            .getAllCharacters()
+            .getAllCharacters(offset)
             .then(this.onCharactersLoaded)
             .catch(this.onErrorLoaded)
+    }
+
+    onCharListLoading = () => {
+        this.setState({
+            newItemsLoading: true
+        })
     }
 
     onErrorLoaded = () => {
@@ -29,8 +43,13 @@ class CharList extends Component {
         })
     }
 
-    onCharactersLoaded = (characters) => {
-        const charactersMap = characters.map(char => {
+    onCharactersLoaded = (newCharacters) => {
+        let ended = false;
+        if (newCharacters.length < 9) {
+            ended = true;
+        }
+
+        const charactersMap = newCharacters.map(char => {
             const {id, ...charProps} = char;
             return (
                 <CharListItem 
@@ -41,15 +60,18 @@ class CharList extends Component {
             );
         });
 
-        this.setState({
-            characters: charactersMap,
-            loading: false
-        });
+        this.setState(({characters, offset}) => ({
+            characters: [...characters, charactersMap],
+            loading: false,
+            newItemsLoading: false,
+            offset: offset + 9,
+            charEnded: ended
+        }));
     }
     
     render() {
 
-        const {characters, loading, error} = this.state;
+        const {characters, loading, error, newItemsLoading, offset, charEnded} = this.state;
         const errorMessage = error ? <ErrorMessage /> : null;
         const spinner = loading ? <Spinner /> : null;
         const content = !(errorMessage || spinner) ? characters : null;
@@ -61,7 +83,12 @@ class CharList extends Component {
                 <ul className="char__grid">
                     {content}
                 </ul>
-                <button className="button button__main button__long">
+                <button
+                    onClick={() => this.onRequest(offset)}
+                    disabled={newItemsLoading} 
+                    style={{'display': charEnded ? 'none' : 'block'}}
+                    className="button button__main button__long"
+                    >
                     <div className="inner">load more</div>
                 </button>
             </div>
