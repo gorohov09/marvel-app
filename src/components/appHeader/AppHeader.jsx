@@ -5,7 +5,7 @@ const AppHeader = () => {
         <header className="app__header">
             <h1 className="app__title">
                 <a href="#">
-                    <span>Marvel</span>
+                    <span>Marvel </span>
                     information portal
                 </a>
             </h1>
