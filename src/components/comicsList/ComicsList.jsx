@@ -39,10 +39,6 @@ const ComicsList = () => {
 
     const renderItems = (arr) => {
         const items = arr.map((item, i) => {
-            let imgStyle = {'objectFit': 'cover'};
-            if (item.thumbnail.includes('image_not_available.jpg')) {
-                imgStyle = {'objectFit': 'unset'};
-            }
 
             return (
                 <li 
@@ -50,7 +46,7 @@ const ComicsList = () => {
                     key={i}
                     >
                     <a href="#">
-                        <img src={item.thumbnail} alt={item.title} className="comics__item-img" style={imgStyle}/>
+                        <img src={item.thumbnail} alt={item.title} className="comics__item-img"/>
                         <div className="comics__item-name">{item.title}B</div>
                         <div className="comics__item-price">{`${item.price}$`}</div>
                     </a>
