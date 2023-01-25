@@ -32,10 +32,6 @@ const RandomChar = () => {
     const onClickRandomCharacter = () => {
         updateChar();
     }
-
-    console.log(error);
-    console.log(loading);
-
     
     const errorMessage = error ? <ErrorMessage /> : null;
     const spinner = loading ? <Spinner /> : null;
