@@ -7,6 +7,7 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import Skeleton from '../skeleton/Skeleton';
 
 import './charInfo.scss';
+import { Link } from 'react-router-dom';
 
 const CharInfo = (props) => {
 
@@ -51,12 +52,16 @@ const CharInfo = (props) => {
 
 const View = ({char}) => {
     const {name, description, thumbnail, homepage, wiki, comics} = char;
+    console.log(comics);
 
     const isImageNotAvailable = thumbnail.includes('image_not_available.jpg');
     const comicsView = comics.length === 0 ? 'Комиксы отсутствуют' : comics.map((item, i) => {
+        const link = item.resourceURI.split('/');
+        const comicId = link[link.length - 1];
+
         return (
             <li key={i} className="char__comics-item">
-                {item.name}
+                <Link to={`/comics/${comicId}`}>{item.name}</Link>
             </li>
         )
     }).slice(0, 11)
