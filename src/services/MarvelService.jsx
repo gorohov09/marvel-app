@@ -49,7 +49,7 @@ const useMarvelService = () => {
             thumbnail: comic.thumbnail.path + '.' + comic.thumbnail.extension,
             price: comic.prices[0].price,
             pageCount: comic.pageCount,
-            language: comic.textObjects[0].language
+            language: comic.textObjects[0]?.language
         }
     }
 
